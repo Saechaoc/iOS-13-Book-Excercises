@@ -2,7 +2,7 @@
 This book covers real life examples using UIKit and Cocoa Framework. Lightly covers SwiftUI.
 
 ## Topics Covered
-Create, arrange, draw, layer, and animate views that respond to touch
+* Create, arrange, draw, layer, and animate views that respond to touch
 
 * Use view controllers to manage multiple screens of interface
 
