@@ -109,3 +109,62 @@ print (arr)
 // we pass the address of the value using the ampersand
 changeVal2(from: &arr)
 print(arr)
+
+/* A function can be used wherever a value can be used
+* Valid Examples:
+ assigned to a variable
+ passed as an argument in a function call;
+ a function can be returned as the result of a function
+*/
+
+//Ex. 1
+print("Going to run the void function which does nothing")
+var _ = voidFunction()
+
+
+func exFunc(_ function: () -> ()) {
+    function()
+}
+
+//The method signature of 'function' is an int function
+func intFunc(_ int: Int) -> Int {
+    return int
+}
+
+func exFunc(_ function: (Int) -> (Int),_ int: Int) -> Int {
+    return function(int)
+}
+
+print(exFunc(intFunc,1))
+
+//More useful example
+func capitalize(s: String) -> String {
+    let capArray = Array(s)
+    var returnStr = ""
+    var isFirstChar = true
+    
+    for element in 0..<capArray.count {
+        let char = capArray[element]
+        
+        if isFirstChar && char != " " {
+                returnStr += char.uppercased()
+                isFirstChar = false
+        }else if char == " " {
+            returnStr += " "
+            isFirstChar = true
+        }else {
+            returnStr += String(char)
+        }
+    }
+    return returnStr
+}
+
+//Test function
+var str="hello world i hope you  enjoy"
+print(capitalize(s: str))
+
+func applyToString(_ f: (String) -> (String), _ s: String) -> String {
+    return f(s)
+}
+
+applyToString(capitalize, str)
