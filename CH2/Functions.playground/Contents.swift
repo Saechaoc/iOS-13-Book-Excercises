@@ -168,3 +168,54 @@ func applyToString(_ f: (String) -> (String), _ s: String) -> String {
 }
 
 applyToString(capitalize, str)
+
+/* Real World Example
+
+let size = CGSize(width:45, height:20)
+UIGraphicsBeginImageContextWithOptions(size, false, 0)
+let p = UIBezierPath(
+    roundedRect: CGRect(x:0, y:0, width:45, height:20), cornerRadius: 8)
+p.stroke()
+let result = UIGraphicsGetImageFromCurrentImageContext()!
+UIGraphicsEndImageContext()
+
+ This is boilerplate code and needs to be run many times... refactor into
+ 
+ image of size takes in two parameters: size, and a function speicifying what to draw
+ The function first creates an image context
+ Then draws into that context using the function passed in
+ Extracts the image and ends the image context and returns the extracted image
+ 
+ func imageOfSize(_ size:CGSize, _ whatToDraw:() -> ()) -> UIImage {
+     UIGraphicsBeginImageContextWithOptions(size, false, 0)
+     whatToDraw()
+     let result = UIGraphicsGetImageFromCurrentImageContext()!
+     UIGraphicsEndImageContext()
+     return result
+ }
+ 
+ func drawing() {
+     let p = UIBezierPath(
+         roundedRect: CGRect(x:0, y:0, width:45, height:20),
+         cornerRadius: 8)
+     p.stroke()
+ }
+ 
+ //f(x) takes in size and drawing and returns a UIImage
+ let image = imageOfSize(CGSize(width:45, height:20), drawing)
+*/
+
+// We can use typealises so when functions are passed to other functions we can use names
+// Purpose = code easier to read
+
+typealias voidTypeAlias = () -> ()
+
+//Notice how the name represents the typealias naming convention
+func doStuff(_ f: voidTypeAlias) {
+    f()
+}
+
+//Annonymous Functions
+//let x = { () -> String in
+//    return "Hello"
+//}
