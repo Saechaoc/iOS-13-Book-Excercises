@@ -219,3 +219,99 @@ func doStuff(_ f: voidTypeAlias) {
 //let x = { () -> String in
 //    return "Hello"
 //}
+
+//  Pre-Condition: Takes in a parameter CGSize
+//    Post-Condition: returns a function that has no parameters and returns a UIImage
+//
+//    Function creates a function that makes a rounded rectange of size sz
+//    This illustrates "factory making like in JS"
+//
+//func makeRoundedRectangleMaker(_ sz:CGSize) -> () -> UIImage {
+//    func f () -> UIImage {
+//        let im = imageOfSize(sz) {
+//            let p = UIBezierPath(
+//                roundedRect: CGRect(origin:CGPoint.zero, size:sz),
+//                cornerRadius: 8)
+//            p.stroke()
+//        }
+//        return im
+//    }
+//    return f
+//}
+//
+////Can now make many functions makeRRM of any size
+//let maker = makeRoundedRectangleMaker(CGSize(width:45, height:20))
+//self.iv.image = maker()
+
+//Can improve on this by making this a curried function ie. the function return a function requiring a radius parameter
+// ie... func f(sz: CGSize) -> (CGFloat) -> UIImage...
+
+
+var x = 0
+print(x)
+
+//This function accesses the reference to x
+func setX(_ newX: Int) {
+    x = newX
+}
+
+//X is updated to 100
+setX(100)
+print(x)
+
+//Escaping Closures
+// An Escaping Closure is a closure that’s called after the function it was passed to returns. In other words, it outlives the function it was passed to
+
+/*
+    Pre:Takes in a function with no params
+    Post: Returns a function with no params; Count += 1
+ */
+func countAdder(_ f: @escaping () -> ()) -> () -> () {
+    var ct = 0
+    return {
+        ct += 1
+        print("Count is \(ct)")
+        f()
+    }
+}
+
+func greet() {
+    print("howdy")
+}
+
+
+let fx = countAdder(greet)
+fx()
+fx()
+fx()
+
+typealias escapingTypeAlias = () -> ()
+
+func fun(_ f: @escaping escapingTypeAlias) -> () -> () {
+    return f
+}
+
+fun(greet)()
+
+class Cat {
+    func purr(){
+        print("purr")
+    }
+}
+
+class Dog {
+    
+    let cat = Cat()
+    
+    func bark() {
+        print("roof")
+    }
+    
+    func test() {
+        cat.purr()
+        self.bark()
+    }
+}
+
+let dog = Dog()
+dog.test()
