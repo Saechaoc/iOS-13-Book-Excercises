@@ -15,6 +15,7 @@ class Dog {
         self.init(license: license)
     }
 
+
 }
 let fido = Dog(name: "Luna",license: 1234)
 
@@ -29,6 +30,15 @@ class BetterDog {
     
     func toString() {
         print("\(name) has the license \(license)")
+    }
+    
+    func bark() {
+        print("woof")
+    }
+    
+    func speak() {
+        self.bark()
+        print("I'm \(self.name)")
     }
 }
 
@@ -75,6 +85,7 @@ struct Digit {
 }
 
 //Failable initializers: return an optional wrapping the new instance
+//Nil is a signal for failure
 class FailableDoggy {
     let name : String
     let license : Int
